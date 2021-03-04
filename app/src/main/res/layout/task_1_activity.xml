@@ -1,75 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/white"
-    tools:context=".MainActivity">
+    android:orientation="vertical">
+
     <TextView
         android:id="@+id/title_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
         android:padding="100dp"
         android:text="@string/title_initial_string"
-        android:textSize="72sp"
-        android:fontFamily="sans-serif-medium"
-        android:textStyle="bold"
         android:textColor="@color/black"
-        android:gravity="center" />
+        android:textSize="72sp"
+        android:textStyle="bold" />
+
     <TextView
         android:id="@+id/subtitle_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-thin"
+        android:gravity="center"
         android:paddingBottom="70dp"
         android:text="@string/subtitle_initial_string"
-        android:textSize="16sp"
-        android:fontFamily="sans-serif-thin"
-        android:textStyle="bold"
         android:textColor="@color/black"
-        android:gravity="center" />
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
     <Switch
         android:id="@+id/switch_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:checked="true"
         android:text="SWITCH #1" />
+
     <Switch
         android:id="@+id/switch_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:checked="false"
         android:text="SWITCH #2" />
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="STATEMENT  &quot;#1 STATE IS OPPOSITE TO #2 STATE&quot; IS: "
-            android:textSize="12sp"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+
         <ToggleButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:textOn = "TRUE"
-            android:textOff= "FALSE"
-            android:checked="true"/>
+            android:checked="true"
+            android:textOff="FALSE"
+            android:textOn="TRUE"
+            android:textSize="12sp" />
     </LinearLayout>
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Enter your name here" />
+
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Use name"/>
+        android:text="Use name" />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="PUSH ME"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:text="PUSH ME" />
 </LinearLayout>
