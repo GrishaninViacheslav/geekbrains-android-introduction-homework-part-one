@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Geekbrains-android-introduction-homework</string>
+    <string name="title_initial_string">B I G</string>
+    <string name="subtitle_initial_string">small</string>
 </resources>
