@@ -32,7 +32,6 @@
         android:paddingBottom="70dp"
         android:text="@string/subtitle_initial_string"
         android:textColor="@color/black"
-        android:textSize="16sp"
         android:textStyle="bold" />
 
     <Switch
@@ -62,6 +61,7 @@
             android:textSize="12sp" />
 
         <ToggleButton
+            android:id="@+id/satement_toggle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
@@ -71,16 +71,19 @@
     </LinearLayout>
 
     <EditText
+        android:id="@+id/name_field"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Enter your name here" />
 
     <CheckBox
+        android:id="@+id/use_name_checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Use name" />
 
     <Button
+        android:id="@+id/push_me_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

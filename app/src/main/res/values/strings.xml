@@ -2,4 +2,13 @@
     <string name="app_name">Geekbrains-android-introduction-homework</string>
     <string name="title_initial_string">B I G</string>
     <string name="subtitle_initial_string">small</string>
+    <string name="title_string">H E L L O</string>
+    <string name="title_string_1">H A R D E R</string>
+    <string name="title_string_2">H-A R D E R</string>
+    <string name="title_string_3">H-A-R D E R</string>
+    <string name="title_string_4">H-A-R-D E R</string>
+    <string name="title_string_5">H-A-R-D-E R</string>
+    <string name="title_string_6">H-A-R-D-E-R</string>
+    <string name="title_string_7">WELL DONE</string>
+    <string name="subtitle_default_string">pal</string>
 </resources>
