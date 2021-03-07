@@ -1,20 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="oval">
-    <solid android:color="#FFFFFF"/>
-
+    <solid android:color="#FFFFFF" />
 </shape>
-
-<!-- https://stackoverflow.com/questions/3779173/determining-the-size-of-an-android-view-at-runtime -->
-
-<!--
-<?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
-    <solid android:color="#eeffffff" />
-    <corners android:bottomRightRadius="1000dp"
-        android:bottomLeftRadius="1000dp"
-        android:topRightRadius="1000dp"
-        android:topLeftRadius="1000dp"/>
-</shape>
--->
