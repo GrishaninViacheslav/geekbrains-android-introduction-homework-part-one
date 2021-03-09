@@ -11,7 +11,7 @@
     <string name="_9">9</string>
     <string name="_0">0</string>
     <string name="_point">.</string>
-    <string name="inverse">+/-</string>
+    <string name="inverse">+|-</string>
     <string name="percentage">%</string>
     <string name="_clear">C</string>
     <string name="_parentheses">()</string>
@@ -20,4 +20,5 @@
     <string name="_subtraction">-</string>
     <string name="_addition">+</string>
     <string name="_computation">=</string>
+    <string name="button_font">sans-serif-light</string>
 </resources>
