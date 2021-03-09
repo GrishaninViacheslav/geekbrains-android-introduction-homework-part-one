@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="button_text">35sp</dimen>
+    <dimen name="button_padding">4sp</dimen>
+    <dimen name="button_vertical_margin">4sp</dimen>
+    <dimen name="button_horizontal_margin">9sp</dimen>
+</resources>
