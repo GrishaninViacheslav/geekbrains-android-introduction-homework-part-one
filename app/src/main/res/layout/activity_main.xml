@@ -333,7 +333,7 @@
         android:textColor="@color/white"
         android:textSize="@dimen/button_text"
         app:backgroundTint="@color/button"
-        app:layout_constraintBottom_toTopOf="@id/button_computation"
+        app:layout_constraintBottom_toTopOf="@id/button_result"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/button_3"
@@ -393,12 +393,12 @@
         app:backgroundTint="@color/button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintEnd_toStartOf="@id/button_computation"
+        app:layout_constraintEnd_toStartOf="@id/button_result"
         app:layout_constraintStart_toEndOf="@id/button_0"
         app:layout_constraintTop_toBottomOf="@id/button_3" />
 
     <Button
-        android:id="@+id/button_computation"
+        android:id="@+id/button_result"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/button_horizontal_margin"

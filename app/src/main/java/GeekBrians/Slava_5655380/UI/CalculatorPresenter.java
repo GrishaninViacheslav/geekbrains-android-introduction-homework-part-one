@@ -5,11 +5,18 @@ import android.util.Log;
 import android.view.inputmethod.ExtractedTextRequest;
 import android.view.inputmethod.InputConnection;
 
+import java.text.ParseException;
+import java.util.regex.Pattern;
+
+import GeekBrians.Slava_5655380.Calculator.BigDecimalBinaryOperation;
 import GeekBrians.Slava_5655380.Calculator.Calculator;
+import GeekBrians.Slava_5655380.Calculator.mathNotationParsers.InfixToRPNConverter;
+import GeekBrians.Slava_5655380.Calculator.mathNotationParsers.RPNSolver;
 
 public class CalculatorPresenter {
+
     private InputConnection display;
-    private Calculator calculator = new Calculator();
+    private BigDecimalBinaryOperation calculator;
     private String displayValue;
     private char digitsSeparator;
     private byte currDigitsBeforeSeparator;
@@ -36,10 +43,41 @@ public class CalculatorPresenter {
         display.deleteSurroundingText(beforCursorText.length(), afterCursorText.length());
     }
 
-    public void commitSymb(char symb) {
+    // TODO: REFACTOR: Можно объеденить с numKeyPressed в общий метод symbKeyPressed()
+    public void operatorKeyPressed(char operatorSymb){
+        commitSymb(String.valueOf(operatorSymb).charAt(0));
+    }
+
+    public void keyResultPressed(){
+        String expression = display.getExtractedText(new ExtractedTextRequest(), 0).text.toString();
+        expression = expression.replaceAll(String.valueOf(digitsSeparator), "");
+        InfixToRPNConverter infixToRPNConverter = new InfixToRPNConverter();
+        try {
+            infixToRPNConverter.parse(expression);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        RPNSolver rpnSolver = new RPNSolver(calculator, infixToRPNConverter.getStackRPN());
+        keyClearPressed();
+        display.commitText(String.valueOf(rpnSolver.solve()), 1);
+        formatText(display);
+    }
+
+    public void keyBackspacePressed() {
+        // TODO: обраюотать удаление пробелов(разделителей) и знаков
+        if (TextUtils.isEmpty(display.getSelectedText(0))) {
+            display.deleteSurroundingText(1, 0);
+        } else {
+            display.commitText("", 1);
+        }
+    }
+
+    private void commitSymb(char symb) {
         display.commitText(String.valueOf(symb), 1);
         formatText(display);
     }
+
+
 
     // TODO: REFACTOR: Вынести эти методы в класс InputConnectionFormater
     private void formatText(InputConnection display) {
@@ -48,13 +86,10 @@ public class CalculatorPresenter {
         int lastNumberOfSeparators = countEntries(srcText, String.valueOf(digitsSeparator));
         String formatedText = insertSeparators(srcText);
         keyClearPressed();
-        display.commitText(formatedText, 1);
-        //int newCursorPosition = lastCursorPosition + countEntries(formatedText, String.valueOf(digitsSeparator), lastCursorPosition - 2);
+        display.commitText(formatedText, 1); // TODO: REFACTOR: использовать параметр newCursorPosition метода .commitText вместо метода .setSelection
         int currNumberOfSeparators = countEntries(formatedText, String.valueOf(digitsSeparator));
-        Log.d("[Presenter]", String.valueOf(lastNumberOfSeparators) + " vs " + String.valueOf(currNumberOfSeparators));
         if(lastNumberOfSeparators != currNumberOfSeparators){
             display.setSelection(lastCursorPosition + 1, lastCursorPosition + 1);
-            Log.d("[Presenter]", "shift");
         }
         else
             display.setSelection(lastCursorPosition, lastCursorPosition);
@@ -68,11 +103,10 @@ public class CalculatorPresenter {
     private String insertSeparators(String srcText) {
         srcText =  srcText.replaceAll(String.valueOf(digitsSeparator), "");
         for (int i = srcText.length(); i > NUMBER_OF_DIGITS_TO_SEPARATE; i--) {
-            try {
-                Integer.parseInt(srcText.substring(i - NUMBER_OF_DIGITS_TO_SEPARATE, i));
-            } catch (NumberFormatException numberFormatException) {
+            if(Pattern.compile("\\D").matcher(srcText.substring(i - NUMBER_OF_DIGITS_TO_SEPARATE, i)).find())
                 continue;
-            }
+            if(Pattern.compile("\\D").matcher(srcText.substring(i - NUMBER_OF_DIGITS_TO_SEPARATE - 1, i - NUMBER_OF_DIGITS_TO_SEPARATE)).find())
+                continue;
             srcText = srcText.substring(0, i - NUMBER_OF_DIGITS_TO_SEPARATE) + digitsSeparator + srcText.substring(i - NUMBER_OF_DIGITS_TO_SEPARATE, srcText.length());
         }
         return srcText;
@@ -80,14 +114,5 @@ public class CalculatorPresenter {
 
     private int countEntries(String src, String value){
         return src.length() - src.replace(value, "").length();
-    }
-
-    public void keyBackspacePressed() {
-        // TODO: обраюотать удаление пробелов(разделителей) и знаков
-        if (TextUtils.isEmpty(display.getSelectedText(0))) {
-            display.deleteSurroundingText(1, 0);
-        } else {
-            display.commitText("", 1);
-        }
     }
 }

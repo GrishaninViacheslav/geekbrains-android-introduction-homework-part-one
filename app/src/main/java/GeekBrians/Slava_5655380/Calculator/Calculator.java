@@ -4,11 +4,17 @@ import java.math.BigDecimal;
 
 public class Calculator implements BigDecimalBinaryOperation {
     @Override
-    public double binaryOperation(BigDecimal leftArg, BigDecimal rightArg, Operation operation) {
+    public String binaryOperation(BigDecimal leftOperand, BigDecimal rightOperand, Operation operation) {
         switch (operation){
             case ADD:
-                return leftArg.add(rightArg).doubleValue();
+                return leftOperand.add(rightOperand).toString();
+            case SUB:
+                return leftOperand.subtract(rightOperand).toString();
+            case MULT:
+                return leftOperand.multiply(rightOperand).toString();
+            case DIV:
+                return leftOperand.divide(rightOperand).toString();
         }
-        return 0;
+        return "NaN";
     }
 }

@@ -51,6 +51,20 @@ public class MainActivity extends AppCompatActivity {
                 calculatorPresenter.keyClearPressed();
             }
         });
+
+        findViewById(R.id.button_addition).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                calculatorPresenter.operatorKeyPressed('+');
+            }
+        });
+
+        findViewById(R.id.button_result).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                calculatorPresenter.keyResultPressed();
+            }
+        });
     }
 
     private View.OnClickListener makeNumButtonListener(byte keyNum){
