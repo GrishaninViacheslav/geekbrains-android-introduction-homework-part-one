@@ -1,19 +1,26 @@
 package GeekBrians.Slava_5655380.Calculator;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 
-public class Calculator implements BigDecimalBinaryOperation {
+public class Calculator implements BinaryOperation {
+    private int precision = 16;
+    private RoundingMode roundingMode = RoundingMode.HALF_UP;
+
     @Override
-    public String binaryOperation(BigDecimal leftOperand, BigDecimal rightOperand, Operation operation) {
-        switch (operation){
+    public String binaryOperation(String leftOperand, String rightOperand, Operation operation) {
+        BigDecimal leftOperandBD = new BigDecimal(leftOperand,  new MathContext(precision));
+        BigDecimal rightOperandBD = new BigDecimal(rightOperand,  new MathContext(precision));
+        switch (operation) {
             case ADD:
-                return leftOperand.add(rightOperand).toString();
+                return leftOperandBD.add(rightOperandBD).setScale(precision, roundingMode).stripTrailingZeros().toPlainString();
             case SUB:
-                return leftOperand.subtract(rightOperand).toString();
+                return rightOperandBD.subtract(leftOperandBD).setScale(precision, roundingMode).stripTrailingZeros().toPlainString(); // TODO: разобраться почему операнды пришлось поменять местами
             case MULT:
-                return leftOperand.multiply(rightOperand).toString();
+                return leftOperandBD.multiply(rightOperandBD).setScale(precision, roundingMode).stripTrailingZeros().toPlainString();
             case DIV:
-                return leftOperand.divide(rightOperand).toString();
+                return rightOperandBD.divide(leftOperandBD, precision, roundingMode).stripTrailingZeros().toPlainString(); // TODO: разобраться почему операнды пришлось поменять местами
         }
         return "NaN";
     }

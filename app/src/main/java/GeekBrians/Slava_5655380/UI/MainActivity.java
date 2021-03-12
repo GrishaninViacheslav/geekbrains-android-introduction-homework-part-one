@@ -3,7 +3,6 @@ package GeekBrians.Slava_5655380.UI;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -33,29 +32,27 @@ public class MainActivity extends AppCompatActivity {
     // TODO: REFACTOR: Вынести реализацию событий в класс CalculatorDispaly, который посылает сообщение displayResult
 
     public void initButtonsListeners() {
-        findViewById(R.id.button_0).setOnClickListener(makeNumButtonListener((byte) 0));
-        findViewById(R.id.button_1).setOnClickListener(makeNumButtonListener((byte) 1));
-        findViewById(R.id.button_2).setOnClickListener(makeNumButtonListener((byte) 2));
-        findViewById(R.id.button_3).setOnClickListener(makeNumButtonListener((byte) 3));
-        findViewById(R.id.button_4).setOnClickListener(makeNumButtonListener((byte) 4));
-        findViewById(R.id.button_5).setOnClickListener(makeNumButtonListener((byte) 5));
-        findViewById(R.id.button_6).setOnClickListener(makeNumButtonListener((byte) 6));
-        findViewById(R.id.button_7).setOnClickListener(makeNumButtonListener((byte) 7));
-        findViewById(R.id.button_8).setOnClickListener(makeNumButtonListener((byte) 8));
-        findViewById(R.id.button_9).setOnClickListener(makeNumButtonListener((byte) 9));
+        findViewById(R.id.button_0).setOnClickListener(makeSymbButtonListener(Character.forDigit((byte)0, 10)));
+        findViewById(R.id.button_1).setOnClickListener(makeSymbButtonListener(Character.forDigit((byte)1, 10)));
+        findViewById(R.id.button_2).setOnClickListener(makeSymbButtonListener(Character.forDigit((byte)2, 10)));
+        findViewById(R.id.button_3).setOnClickListener(makeSymbButtonListener(Character.forDigit((byte)3, 10)));
+        findViewById(R.id.button_4).setOnClickListener(makeSymbButtonListener(Character.forDigit((byte)4, 10)));
+        findViewById(R.id.button_5).setOnClickListener(makeSymbButtonListener(Character.forDigit((byte)5, 10)));
+        findViewById(R.id.button_6).setOnClickListener(makeSymbButtonListener(Character.forDigit((byte)6, 10)));
+        findViewById(R.id.button_7).setOnClickListener(makeSymbButtonListener(Character.forDigit((byte)7, 10)));
+        findViewById(R.id.button_8).setOnClickListener(makeSymbButtonListener(Character.forDigit((byte)8, 10)));
+        findViewById(R.id.button_9).setOnClickListener(makeSymbButtonListener(Character.forDigit((byte)9, 10)));
+
+        findViewById(R.id.button_addition).setOnClickListener(makeSymbButtonListener('+'));
+        findViewById(R.id.button_subtraction).setOnClickListener(makeSymbButtonListener('-'));
+        findViewById(R.id.button_multiplication).setOnClickListener(makeSymbButtonListener('*'));
+        findViewById(R.id.button_division).setOnClickListener(makeSymbButtonListener('/'));
 
 
         findViewById(R.id.button_clear).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 calculatorPresenter.keyClearPressed();
-            }
-        });
-
-        findViewById(R.id.button_addition).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                calculatorPresenter.operatorKeyPressed('+');
             }
         });
 
@@ -67,11 +64,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private View.OnClickListener makeNumButtonListener(byte keyNum){
+    private View.OnClickListener makeSymbButtonListener(char symb){
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                calculatorPresenter.numKeyPressed(keyNum);
+                calculatorPresenter.symbKeyPressed(symb);
             }
         };
     }

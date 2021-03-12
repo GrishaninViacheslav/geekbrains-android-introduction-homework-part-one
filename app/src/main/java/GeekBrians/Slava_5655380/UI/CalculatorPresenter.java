@@ -1,14 +1,13 @@
 package GeekBrians.Slava_5655380.UI;
 
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.inputmethod.ExtractedTextRequest;
 import android.view.inputmethod.InputConnection;
 
 import java.text.ParseException;
 import java.util.regex.Pattern;
 
-import GeekBrians.Slava_5655380.Calculator.BigDecimalBinaryOperation;
+import GeekBrians.Slava_5655380.Calculator.BinaryOperation;
 import GeekBrians.Slava_5655380.Calculator.Calculator;
 import GeekBrians.Slava_5655380.Calculator.mathNotationParsers.InfixToRPNConverter;
 import GeekBrians.Slava_5655380.Calculator.mathNotationParsers.RPNSolver;
@@ -16,23 +15,15 @@ import GeekBrians.Slava_5655380.Calculator.mathNotationParsers.RPNSolver;
 public class CalculatorPresenter {
 
     private InputConnection display;
-    private BigDecimalBinaryOperation calculator;
-    private String displayValue;
+    private BinaryOperation calculator;
     private char digitsSeparator;
-    private byte currDigitsBeforeSeparator;
     private final byte NUMBER_OF_DIGITS_TO_SEPARATE;
 
     public CalculatorPresenter(InputConnection display, Calculator calculator) {
         this.display = display;
         this.calculator = calculator;
-        displayValue = "";
         digitsSeparator = ' ';
         NUMBER_OF_DIGITS_TO_SEPARATE = 3;
-        currDigitsBeforeSeparator = NUMBER_OF_DIGITS_TO_SEPARATE;
-    }
-
-    public void numKeyPressed(byte keyNumber) {
-        commitSymb(String.valueOf(keyNumber).charAt(0));
     }
 
     public void keyClearPressed() {
@@ -43,9 +34,8 @@ public class CalculatorPresenter {
         display.deleteSurroundingText(beforCursorText.length(), afterCursorText.length());
     }
 
-    // TODO: REFACTOR: Можно объеденить с numKeyPressed в общий метод symbKeyPressed()
-    public void operatorKeyPressed(char operatorSymb){
-        commitSymb(String.valueOf(operatorSymb).charAt(0));
+    public void symbKeyPressed(char symb){
+        commitSymb(String.valueOf(symb).charAt(0));
     }
 
     public void keyResultPressed(){
@@ -80,6 +70,7 @@ public class CalculatorPresenter {
 
 
     // TODO: REFACTOR: Вынести эти методы в класс InputConnectionFormater
+    // TODO: Реализовать удаление незначащих нулей, чтобы например "05" сразу заменялось на "5"
     private void formatText(InputConnection display) {
         int lastCursorPosition = getCursorPosition(display);
         String srcText = display.getExtractedText(new ExtractedTextRequest(), 0).text.toString();

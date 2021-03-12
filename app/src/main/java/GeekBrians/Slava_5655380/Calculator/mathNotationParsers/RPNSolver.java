@@ -3,12 +3,12 @@ package GeekBrians.Slava_5655380.Calculator.mathNotationParsers;
 import java.math.BigDecimal;
 import java.util.Stack;
 
-import GeekBrians.Slava_5655380.Calculator.BigDecimalBinaryOperation;
+import GeekBrians.Slava_5655380.Calculator.BinaryOperation;
 import GeekBrians.Slava_5655380.Calculator.Operation;
 
 public class RPNSolver {
 
-    BigDecimalBinaryOperation calculator;
+    BinaryOperation calculator;
 
     private final String VARIABLE = "var";
 
@@ -28,7 +28,7 @@ public class RPNSolver {
 
     public Stack<String> resultStack = new Stack<String>();
 
-    public RPNSolver(BigDecimalBinaryOperation calculator, Stack<String> stackRPN) {
+    public RPNSolver(BinaryOperation calculator, Stack<String> stackRPN) {
         this.calculator = calculator;
         this.stackRPN = stackRPN;
     }
@@ -39,16 +39,16 @@ public class RPNSolver {
             if (isNumber(token))
                 resultStack.push(token);
             else {
-                double leftOperand = Double.parseDouble(resultStack.pop());
-                double rightOperand = Double.parseDouble(resultStack.pop());
+                String leftOperand = resultStack.pop();
+                String rightOperand = resultStack.pop();
                 if (token.equals("+")) {
-                    resultStack.push(String.valueOf(calculator.binaryOperation(new BigDecimal(leftOperand), new BigDecimal(rightOperand), Operation.ADD)));
+                    resultStack.push(String.valueOf(calculator.binaryOperation(leftOperand, rightOperand, Operation.ADD)));
                 } else if (token.equals("-")) {
-                    resultStack.push(String.valueOf(calculator.binaryOperation(new BigDecimal(leftOperand), new BigDecimal(rightOperand), Operation.SUB)));
+                    resultStack.push(String.valueOf(calculator.binaryOperation(leftOperand, rightOperand, Operation.SUB)));
                 } else if (token.equals("/")) {
-                    resultStack.push(String.valueOf(calculator.binaryOperation(new BigDecimal(leftOperand), new BigDecimal(rightOperand), Operation.DIV)));
+                    resultStack.push(String.valueOf(calculator.binaryOperation(leftOperand, rightOperand, Operation.DIV)));
                 } else if (token.equals("*")) {
-                    resultStack.push(String.valueOf(calculator.binaryOperation(new BigDecimal(leftOperand), new BigDecimal(rightOperand), Operation.MULT)));
+                    resultStack.push(String.valueOf(calculator.binaryOperation(leftOperand, rightOperand, Operation.MULT)));
                 }
             }
         }
