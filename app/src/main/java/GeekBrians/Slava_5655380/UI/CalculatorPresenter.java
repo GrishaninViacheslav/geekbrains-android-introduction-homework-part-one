@@ -1,6 +1,7 @@
 package GeekBrians.Slava_5655380.UI;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.inputmethod.ExtractedTextRequest;
 import android.view.inputmethod.InputConnection;
 
@@ -67,8 +68,6 @@ public class CalculatorPresenter {
         formatText(display);
     }
 
-
-
     // TODO: REFACTOR: Вынести эти методы в класс InputConnectionFormater
     // TODO: Реализовать удаление незначащих нулей, чтобы например "05" сразу заменялось на "5"
     private void formatText(InputConnection display) {
@@ -79,11 +78,7 @@ public class CalculatorPresenter {
         keyClearPressed();
         display.commitText(formatedText, 1); // TODO: REFACTOR: использовать параметр newCursorPosition метода .commitText вместо метода .setSelection
         int currNumberOfSeparators = countEntries(formatedText, String.valueOf(digitsSeparator));
-        if(lastNumberOfSeparators != currNumberOfSeparators){
-            display.setSelection(lastCursorPosition + 1, lastCursorPosition + 1);
-        }
-        else
-            display.setSelection(lastCursorPosition, lastCursorPosition);
+        display.setSelection(lastCursorPosition + (currNumberOfSeparators - lastNumberOfSeparators), lastCursorPosition + (currNumberOfSeparators - lastNumberOfSeparators));
     }
 
     private int getCursorPosition(InputConnection display) {

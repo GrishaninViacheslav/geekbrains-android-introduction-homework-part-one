@@ -5,7 +5,7 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 
 public class Calculator implements BinaryOperation {
-    private int precision = 16;
+    private int precision = 13;
     private RoundingMode roundingMode = RoundingMode.HALF_UP;
 
     @Override
