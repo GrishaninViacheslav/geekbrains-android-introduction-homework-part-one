@@ -35,11 +35,40 @@ public class CalculatorPresenter {
         display.deleteSurroundingText(beforCursorText.length(), afterCursorText.length());
     }
 
-    public void symbKeyPressed(char symb){
+    private int parenthesesToClose = 0;
+
+    // TODO: REFACTOR: Вынести patterns в свойства чтобы их каждый раз не перекомпилировать
+    public void keyParenthesesPressed() {
+        int cursorPosition = getCursorPosition(display);
+        int shift = 1;
+        char prevSymb = ((cursorPosition - shift < 0) ? 0 : display.getExtractedText(new ExtractedTextRequest(), 0).text.toString().charAt(cursorPosition - shift));
+
+        while (prevSymb == '(' || prevSymb == ')') {
+            shift++;
+            prevSymb = ((cursorPosition - shift < 0) ? 0 : display.getExtractedText(new ExtractedTextRequest(), 0).text.toString().charAt(cursorPosition - shift));
+        }
+        if (cursorPosition - shift < 0 || Pattern.compile("[a-z]|[A-Z]|\\+|\\-|\\*|\\/|\\%").matcher(String.valueOf(prevSymb)).find()) {
+            parenthesesToClose++;
+            commitSymb('(');
+            return;
+        }
+        if (parenthesesToClose == 0 && Pattern.compile("\\d|\\.").matcher(String.valueOf(prevSymb)).find()) {
+            parenthesesToClose++;
+            commitSymb('*');
+            commitSymb('(');
+            return;
+        }
+
+        parenthesesToClose--;
+        commitSymb(')');
+        return;
+    }
+
+    public void symbKeyPressed(char symb) {
         commitSymb(String.valueOf(symb).charAt(0));
     }
 
-    public void keyResultPressed(){
+    public void keyResultPressed() {
         String expression = display.getExtractedText(new ExtractedTextRequest(), 0).text.toString();
         expression = expression.replaceAll(String.valueOf(digitsSeparator), "");
         InfixToRPNConverter infixToRPNConverter = new InfixToRPNConverter();
@@ -81,24 +110,34 @@ public class CalculatorPresenter {
         display.setSelection(lastCursorPosition + (currNumberOfSeparators - lastNumberOfSeparators), lastCursorPosition + (currNumberOfSeparators - lastNumberOfSeparators));
     }
 
+    // TODO: REFACTOR: заменить все display.getExtractedText(new ExtractedTextRequest(), 0).text на extractedText(displat)
+    private String extractedText(InputConnection display) {
+        return display.getExtractedText(new ExtractedTextRequest(), 0).text.toString();
+    }
+
+    // TODO: REFACTOR: заменить все Pattern.compile(regexp).matcher(src).find() на isStringContains(src, pattern)
+    private boolean isStringContains(String src, Pattern pattern) {
+        return pattern.matcher(src).find();
+    }
+
     private int getCursorPosition(InputConnection display) {
         CharSequence currentText = display.getExtractedText(new ExtractedTextRequest(), 0).text;
         return display.getTextBeforeCursor(currentText.length(), 0).length();
     }
 
     private String insertSeparators(String srcText) {
-        srcText =  srcText.replaceAll(String.valueOf(digitsSeparator), "");
+        srcText = srcText.replaceAll(String.valueOf(digitsSeparator), "");
         for (int i = srcText.length(); i > NUMBER_OF_DIGITS_TO_SEPARATE; i--) {
-            if(Pattern.compile("\\D").matcher(srcText.substring(i - NUMBER_OF_DIGITS_TO_SEPARATE, i)).find())
+            if (Pattern.compile("\\D").matcher(srcText.substring(i - NUMBER_OF_DIGITS_TO_SEPARATE, i)).find())
                 continue;
-            if(Pattern.compile("\\D").matcher(srcText.substring(i - NUMBER_OF_DIGITS_TO_SEPARATE - 1, i - NUMBER_OF_DIGITS_TO_SEPARATE)).find())
+            if (Pattern.compile("\\D").matcher(srcText.substring(i - NUMBER_OF_DIGITS_TO_SEPARATE - 1, i - NUMBER_OF_DIGITS_TO_SEPARATE)).find())
                 continue;
             srcText = srcText.substring(0, i - NUMBER_OF_DIGITS_TO_SEPARATE) + digitsSeparator + srcText.substring(i - NUMBER_OF_DIGITS_TO_SEPARATE, srcText.length());
         }
         return srcText;
     }
 
-    private int countEntries(String src, String value){
+    private int countEntries(String src, String value) {
         return src.length() - src.replace(value, "").length();
     }
 }

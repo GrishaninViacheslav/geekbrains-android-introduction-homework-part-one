@@ -25,31 +25,38 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         calculatorDispaly = findViewById(R.id.display);
         calculatorDispaly.setShowSoftInputOnFocus(false);
-        calculatorPresenter = new CalculatorPresenter( calculatorDispaly.onCreateInputConnection(new EditorInfo()), new Calculator());
+        calculatorPresenter = new CalculatorPresenter(calculatorDispaly.onCreateInputConnection(new EditorInfo()), new Calculator());
         initButtonsListeners();
     }
 
     // TODO: REFACTOR: Вынести реализацию событий в класс CalculatorDispaly, который посылает сообщение displayResult
 
     public void initButtonsListeners() {
-        findViewById(R.id.button_0).setOnClickListener(makeSymbButtonListener(Character.forDigit((byte)0, 10)));
-        findViewById(R.id.button_1).setOnClickListener(makeSymbButtonListener(Character.forDigit((byte)1, 10)));
-        findViewById(R.id.button_2).setOnClickListener(makeSymbButtonListener(Character.forDigit((byte)2, 10)));
-        findViewById(R.id.button_3).setOnClickListener(makeSymbButtonListener(Character.forDigit((byte)3, 10)));
-        findViewById(R.id.button_4).setOnClickListener(makeSymbButtonListener(Character.forDigit((byte)4, 10)));
-        findViewById(R.id.button_5).setOnClickListener(makeSymbButtonListener(Character.forDigit((byte)5, 10)));
-        findViewById(R.id.button_6).setOnClickListener(makeSymbButtonListener(Character.forDigit((byte)6, 10)));
-        findViewById(R.id.button_7).setOnClickListener(makeSymbButtonListener(Character.forDigit((byte)7, 10)));
-        findViewById(R.id.button_8).setOnClickListener(makeSymbButtonListener(Character.forDigit((byte)8, 10)));
-        findViewById(R.id.button_9).setOnClickListener(makeSymbButtonListener(Character.forDigit((byte)9, 10)));
+        findViewById(R.id.button_0).setOnClickListener(makeSymbButtonListener(Character.forDigit((byte) 0, 10)));
+        findViewById(R.id.button_1).setOnClickListener(makeSymbButtonListener(Character.forDigit((byte) 1, 10)));
+        findViewById(R.id.button_2).setOnClickListener(makeSymbButtonListener(Character.forDigit((byte) 2, 10)));
+        findViewById(R.id.button_3).setOnClickListener(makeSymbButtonListener(Character.forDigit((byte) 3, 10)));
+        findViewById(R.id.button_4).setOnClickListener(makeSymbButtonListener(Character.forDigit((byte) 4, 10)));
+        findViewById(R.id.button_5).setOnClickListener(makeSymbButtonListener(Character.forDigit((byte) 5, 10)));
+        findViewById(R.id.button_6).setOnClickListener(makeSymbButtonListener(Character.forDigit((byte) 6, 10)));
+        findViewById(R.id.button_7).setOnClickListener(makeSymbButtonListener(Character.forDigit((byte) 7, 10)));
+        findViewById(R.id.button_8).setOnClickListener(makeSymbButtonListener(Character.forDigit((byte) 8, 10)));
+        findViewById(R.id.button_9).setOnClickListener(makeSymbButtonListener(Character.forDigit((byte) 9, 10)));
 
         findViewById(R.id.button_addition).setOnClickListener(makeSymbButtonListener('+'));
         findViewById(R.id.button_subtraction).setOnClickListener(makeSymbButtonListener('-'));
         findViewById(R.id.button_multiplication).setOnClickListener(makeSymbButtonListener('*'));
         findViewById(R.id.button_division).setOnClickListener(makeSymbButtonListener('/'));
 
+        findViewById(R.id.button_parentheses).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                calculatorPresenter.keyParenthesesPressed();
+            }
+        });
 
-        findViewById(R.id.button_clear).setOnClickListener(new View.OnClickListener(){
+
+        findViewById(R.id.button_clear).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 calculatorPresenter.keyClearPressed();
@@ -64,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private View.OnClickListener makeSymbButtonListener(char symb){
+    private View.OnClickListener makeSymbButtonListener(char symb) {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void log(String message){
+    public void log(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
         Log.d(TAG, message);
     }
