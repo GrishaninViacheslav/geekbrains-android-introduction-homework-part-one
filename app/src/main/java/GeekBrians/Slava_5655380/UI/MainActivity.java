@@ -9,6 +9,8 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.text.ParseException;
+
 import GeekBrians.Slava_5655380.Calculator.Calculator;
 import GeekBrians.Slava_5655380.R;
 
@@ -66,7 +68,11 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.button_result).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                calculatorPresenter.keyResultPressed();
+                try {
+                    calculatorPresenter.keyResultPressed();
+                } catch (ParseException e) {
+                    Toast.makeText(getApplicationContext(), "Использован недопустимый формат: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

@@ -6,6 +6,7 @@ import android.view.inputmethod.ExtractedTextRequest;
 import android.view.inputmethod.InputConnection;
 
 import java.text.ParseException;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import GeekBrians.Slava_5655380.Calculator.BinaryOperation;
@@ -68,15 +69,11 @@ public class CalculatorPresenter {
         commitSymb(String.valueOf(symb).charAt(0));
     }
 
-    public void keyResultPressed() {
+    public void keyResultPressed() throws ParseException {
         String expression = display.getExtractedText(new ExtractedTextRequest(), 0).text.toString();
         expression = expression.replaceAll(String.valueOf(digitsSeparator), "");
         InfixToRPNConverter infixToRPNConverter = new InfixToRPNConverter();
-        try {
-            infixToRPNConverter.parse(expression);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        infixToRPNConverter.parse(expression);
         RPNSolver rpnSolver = new RPNSolver(calculator, infixToRPNConverter.getStackRPN());
         keyClearPressed();
         display.commitText(String.valueOf(rpnSolver.solve()), 1);
@@ -97,8 +94,6 @@ public class CalculatorPresenter {
         formatText(display);
     }
 
-    // TODO: REFACTOR: Вынести эти методы в класс InputConnectionFormater
-    // TODO: Реализовать удаление незначащих нулей, чтобы например "05" сразу заменялось на "5"
     private void formatText(InputConnection display) {
         int lastCursorPosition = getCursorPosition(display);
         String srcText = display.getExtractedText(new ExtractedTextRequest(), 0).text.toString();
@@ -137,7 +132,7 @@ public class CalculatorPresenter {
         return srcText;
     }
 
-    private int countEntries(String src, String value) {
+    public static int countEntries(String src, String value) {
         return src.length() - src.replace(value, "").length();
     }
 }

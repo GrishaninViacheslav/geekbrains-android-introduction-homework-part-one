@@ -5,13 +5,18 @@ import java.util.Collections;
 import java.util.Stack;
 import java.util.StringTokenizer;
 
+import GeekBrians.Slava_5655380.UI.CalculatorPresenter;
+
 /**
  * Класс реализующий алгоритм сортировочной станции.
  * Исходный код получен по ссылке:
  * https://www.pvsm.ru/java/3665
  *
- * Из оригинального исходного кода удаленна реализация парсинга комплексных чисел;
- * Добавлен геттер stackRPN и удаленно не используемое поле stackAnswer.
+ * Модификации оригинального исходного кода:
+ * Удаленна реализация парсинга комплексных чисел;
+ * Удаленно не используемое поле stackAnswer;
+ * Добавлен геттер stackRPN;
+ * Реализованно выбрасывание исключения ParseException;
  */
 public class InfixToRPNConverter {
 
@@ -79,6 +84,13 @@ public class InfixToRPNConverter {
     }
 
     public void parse(String expression) throws ParseException {
+        if(CalculatorPresenter.countEntries(expression, "(") > CalculatorPresenter.countEntries(expression, ")")){
+            throw new ParseException("открывающих скобок больше чем закрывающих.", expression.lastIndexOf(')'));
+        }
+        if(CalculatorPresenter.countEntries(expression, "(") < CalculatorPresenter.countEntries(expression, ")")){
+            throw new ParseException("открывающих скобок меньше чем закрывающих.", expression.lastIndexOf('('));
+        }
+
         // cleaning stacks
         stackOperations.clear();
         stackRPN.clear();
@@ -94,7 +106,9 @@ public class InfixToRPNConverter {
                 OPERATORS + SEPARATOR + "()", true);
 
         // loop for handling each token - shunting-yard algorithm
+        int tokenIndex = 0;
         while (stringTokenizer.hasMoreTokens()) {
+            tokenIndex++;
             String token = stringTokenizer.nextToken();
             if (isSeparator(token)) {
                 while (!stackOperations.empty()
@@ -125,6 +139,8 @@ public class InfixToRPNConverter {
                 stackOperations.push(token);
             } else if (isFunction(token)) {
                 stackOperations.push(token);
+            }else {
+                throw new ParseException("использован неизвестный токен.", tokenIndex);
             }
         }
         while (!stackOperations.empty()) {
