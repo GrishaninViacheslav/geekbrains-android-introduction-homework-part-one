@@ -18,9 +18,9 @@ public class Calculator implements BinaryOperation {
             case SUB:
                 return stripTrailingZerosFixed(leftOperandBD.subtract(rightOperandBD).setScale(precision, roundingMode)).toPlainString();
             case MULT:
-                return stripTrailingZerosFixed(rightOperandBD.multiply(leftOperandBD).setScale(precision, roundingMode)).toPlainString();
+                return stripTrailingZerosFixed(leftOperandBD.multiply(rightOperandBD).setScale(precision, roundingMode)).toPlainString();
             case DIV:
-                return stripTrailingZerosFixed(rightOperandBD.divide(leftOperandBD, precision, roundingMode)).toPlainString();
+                return stripTrailingZerosFixed(leftOperandBD.divide(rightOperandBD, precision, roundingMode)).toPlainString();
         }
         return "NaN";
     }

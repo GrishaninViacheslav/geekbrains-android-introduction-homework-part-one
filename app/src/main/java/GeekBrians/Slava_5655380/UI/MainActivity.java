@@ -93,6 +93,8 @@ public class MainActivity extends AppCompatActivity {
                     calculatorPresenter.keyResultPressed();
                 } catch (ParseException e) {
                     Toast.makeText(getApplicationContext(), "Использован недопустимый формат: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                } catch (ArithmeticException e){
+                    Toast.makeText(getApplicationContext(), "Нельзя делить на ноль.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -106,7 +108,6 @@ public class MainActivity extends AppCompatActivity {
             }
         };
     }
-
 
     public void log(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();

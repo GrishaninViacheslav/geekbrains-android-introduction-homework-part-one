@@ -98,8 +98,9 @@ public class CalculatorPresenter {
         InfixToRPNConverter infixToRPNConverter = new InfixToRPNConverter();
         infixToRPNConverter.parse(expression);
         RPNSolver rpnSolver = new RPNSolver(calculator, infixToRPNConverter.getStackRPN());
+        String result = String.valueOf(rpnSolver.solve());
         keyClearPressed();
-        display.commitText(String.valueOf(rpnSolver.solve()), 1);
+        display.commitText(result, 1);
         formatText(display);
     }
 
