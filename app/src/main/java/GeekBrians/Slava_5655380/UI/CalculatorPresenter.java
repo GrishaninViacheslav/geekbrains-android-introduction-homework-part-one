@@ -36,33 +36,34 @@ public class CalculatorPresenter {
         display.deleteSurroundingText(beforCursorText.length(), afterCursorText.length());
     }
 
-    public void keyPointPressed(){
+    public void keyPointPressed() {
         CharSequence currentText = display.getExtractedText(new ExtractedTextRequest(), 0).text;
-        if(currentText.length() == 0){
+        if (currentText.length() == 0) {
             commitSymb('0');
             commitSymb('.');
             return;
         }
         char currSymb = currentText.charAt(getCursorPosition(display) - 1);
-        if(currSymb == digitsSeparator){
+        if (currSymb == digitsSeparator) {
             currSymb = currentText.charAt(getCursorPosition(display) - 2);
         }
-        if(currSymb == ')'){
+        if (currSymb == ')') {
             commitSymb('*');
             commitSymb('0');
             commitSymb('.');
             return;
         }
-        if(currSymb == '(' || currSymb == '+' || currSymb == '-' || currSymb == '*' || currSymb == '/'){
+        if (currSymb == '(' || currSymb == '+' || currSymb == '-' || currSymb == '*' || currSymb == '/') {
             commitSymb('0');
             commitSymb('.');
             return;
         }
-        if(currSymb == '.'){
+        if (currSymb == '.') {
             return;
         }
         commitSymb('.');
     }
+
     // TODO: REFACTOR: Вынести patterns в свойства чтобы их каждый раз не перекомпилировать
     public void keyParenthesesPressed() {
 
@@ -86,6 +87,55 @@ public class CalculatorPresenter {
 
         commitSymb(')');
         return;
+    }
+
+    public void keyInversionPressed() {
+        CharSequence currentText = display.getExtractedText(new ExtractedTextRequest(), 0).text;
+
+        // ((5 000 000 + 1.2 555))
+        // ((5 000 000 + 1.2 555))+
+
+        // Поле пусто
+        if (currentText.length() == 0) {
+            commitSymb('(');
+            commitSymb('-');
+            return;
+        }
+
+        // Курсор находится после числа
+        if (getCursorPosition(display) - 2 >= 0) {
+            char prevSymb = currentText.charAt(getCursorPosition(display) - 2);
+            boolean isPrevSymbNumber = Pattern.compile("\\d").matcher(String.valueOf(prevSymb)).find();
+            if (isPrevSymbNumber) {
+                int shift;
+                for (shift = 0; getCursorPosition(display) - 2 - shift >= 0 && isPrevSymbNumber; shift++) {
+                    prevSymb = currentText.charAt(getCursorPosition(display) - 2 - shift);
+                    isPrevSymbNumber = Pattern.compile("\\d").matcher(String.valueOf(prevSymb)).find();
+                }
+                int cursorPosition = getCursorPosition(display);
+                display.setSelection(cursorPosition - shift, cursorPosition - shift);
+                commitSymb('(');
+                commitSymb('-');
+                return;
+            }
+        }
+        // Курсор находится внутри числа перед пробелом
+        // Курсор находится внутри числа после пробела
+        // Курсор находится внутри числа перед точкой
+        // Курсор находится внутри числа после точки
+        // Курсор находится внутри числа между цифрами
+
+
+        // Те же ситации но инверсия уже есть
+
+        // Курсор находится после знака
+        // Курсор находится перед числом
+        // Курсор находится перед (
+        // Курсор находится после (
+        commitSymb('(');
+        commitSymb('-');
+        return;
+
     }
 
     public void symbKeyPressed(char symb) {
