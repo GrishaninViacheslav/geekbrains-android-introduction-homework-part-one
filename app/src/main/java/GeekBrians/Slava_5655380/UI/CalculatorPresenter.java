@@ -29,6 +29,7 @@ public class CalculatorPresenter {
     }
 
     public void keyClearPressed() {
+        parenthesesToClose = 0;
         display.commitText("", 1); // снимает выделение если оно есть
         CharSequence currentText = display.getExtractedText(new ExtractedTextRequest(), 0).text;
         CharSequence beforCursorText = display.getTextBeforeCursor(currentText.length(), 0);
