@@ -68,7 +68,6 @@ public class CalculatorPresenter {
     }
 
     public void keyParenthesesPressed() {
-
         int cursorPosition = getCursorPosition(display);
         int shift = 1;
         String currText = extractText(display);
