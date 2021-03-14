@@ -84,6 +84,9 @@ public class InfixToRPNConverter {
     }
 
     public void parse(String expression) throws ParseException {
+        if(expression.length() == 0){
+            throw new ParseException("выражение не может быть пустым.", 0);
+        }
         if(CalculatorPresenter.countEntries(expression, "(") > CalculatorPresenter.countEntries(expression, ")")){
             throw new ParseException("открывающих скобок больше чем закрывающих.", expression.lastIndexOf(')'));
         }

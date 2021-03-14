@@ -12,6 +12,7 @@ import android.widget.Toast;
 import java.text.ParseException;
 
 import GeekBrians.Slava_5655380.Calculator.Calculator;
+import GeekBrians.Slava_5655380.Calculator.mathNotationParsers.MissingTokenException;
 import GeekBrians.Slava_5655380.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -91,9 +92,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 try {
                     calculatorPresenter.keyResultPressed();
-                } catch (ParseException e) {
+                } catch (ParseException | MissingTokenException e) {
                     Toast.makeText(getApplicationContext(), "Использован недопустимый формат: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                } catch (ArithmeticException e){
+                } catch (ArithmeticException e) {
                     Toast.makeText(getApplicationContext(), "Нельзя делить на ноль.", Toast.LENGTH_SHORT).show();
                 }
             }
