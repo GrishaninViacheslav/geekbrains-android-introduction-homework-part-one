@@ -50,6 +50,13 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.button_multiplication).setOnClickListener(makeSymbButtonListener('*'));
         findViewById(R.id.button_division).setOnClickListener(makeSymbButtonListener('/'));
 
+        findViewById(R.id.button_point).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                calculatorPresenter.keyPointPressed();
+            }
+        });
+
         findViewById(R.id.button_parentheses).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

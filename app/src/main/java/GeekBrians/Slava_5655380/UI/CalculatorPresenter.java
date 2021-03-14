@@ -29,7 +29,6 @@ public class CalculatorPresenter {
     }
 
     public void keyClearPressed() {
-        parenthesesToClose = 0;
         display.commitText("", 1); // снимает выделение если оно есть
         CharSequence currentText = display.getExtractedText(new ExtractedTextRequest(), 0).text;
         CharSequence beforCursorText = display.getTextBeforeCursor(currentText.length(), 0);
@@ -37,10 +36,36 @@ public class CalculatorPresenter {
         display.deleteSurroundingText(beforCursorText.length(), afterCursorText.length());
     }
 
-    private int parenthesesToClose = 0;
-
+    public void keyPointPressed(){
+        CharSequence currentText = display.getExtractedText(new ExtractedTextRequest(), 0).text;
+        if(currentText.length() == 0){
+            commitSymb('0');
+            commitSymb('.');
+            return;
+        }
+        char currSymb = currentText.charAt(getCursorPosition(display) - 1);
+        if(currSymb == digitsSeparator){
+            currSymb = currentText.charAt(getCursorPosition(display) - 2);
+        }
+        if(currSymb == ')'){
+            commitSymb('*');
+            commitSymb('0');
+            commitSymb('.');
+            return;
+        }
+        if(currSymb == '(' || currSymb == '+' || currSymb == '-' || currSymb == '*' || currSymb == '/'){
+            commitSymb('0');
+            commitSymb('.');
+            return;
+        }
+        if(currSymb == '.'){
+            return;
+        }
+        commitSymb('.');
+    }
     // TODO: REFACTOR: Вынести patterns в свойства чтобы их каждый раз не перекомпилировать
     public void keyParenthesesPressed() {
+
         int cursorPosition = getCursorPosition(display);
         int shift = 1;
         char prevSymb = ((cursorPosition - shift < 0) ? 0 : display.getExtractedText(new ExtractedTextRequest(), 0).text.toString().charAt(cursorPosition - shift));
@@ -50,18 +75,15 @@ public class CalculatorPresenter {
             prevSymb = ((cursorPosition - shift < 0) ? 0 : display.getExtractedText(new ExtractedTextRequest(), 0).text.toString().charAt(cursorPosition - shift));
         }
         if (cursorPosition - shift < 0 || Pattern.compile("[a-z]|[A-Z]|\\+|\\-|\\*|\\/|\\%").matcher(String.valueOf(prevSymb)).find()) {
-            parenthesesToClose++;
             commitSymb('(');
             return;
         }
-        if (parenthesesToClose == 0 && Pattern.compile("\\d|\\.").matcher(String.valueOf(prevSymb)).find()) {
-            parenthesesToClose++;
+        if (countEntries(display.getExtractedText(new ExtractedTextRequest(), 0).text.toString(), "(") == countEntries(display.getExtractedText(new ExtractedTextRequest(), 0).text.toString(), ")") && Pattern.compile("\\d|\\.").matcher(String.valueOf(prevSymb)).find()) {
             commitSymb('*');
             commitSymb('(');
             return;
         }
 
-        parenthesesToClose--;
         commitSymb(')');
         return;
     }
