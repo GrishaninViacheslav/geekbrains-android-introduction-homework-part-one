@@ -109,14 +109,20 @@ public class CalculatorPresenter {
     }
 
     public void keyBackspacePressed() {
-        // TODO: обраюотать удаление пробелов(разделителей) и знаков
+        CharSequence currentText = display.getExtractedText(new ExtractedTextRequest(), 0).text;
+        if(currentText.length() > 0 && currentText.charAt(getCursorPosition(display) - 1) == digitsSeparator)
+            display.setSelection(getCursorPosition(display) - 1, getCursorPosition(display) - 1);
         if (TextUtils.isEmpty(display.getSelectedText(0))) {
+            Log.d("[Presenter]", "A");
             display.deleteSurroundingText(1, 0);
         } else {
+            Log.d("[Presenter]", "B");
             display.commitText("", 1);
         }
+        formatText(display);
     }
 
+    // TODO: REFACTOR заменить commitSymb(char symb) на commitText(String text) и удалить послимвольный commitText()
     private void commitSymb(char symb) {
         display.commitText(String.valueOf(symb), 1);
         formatText(display);
