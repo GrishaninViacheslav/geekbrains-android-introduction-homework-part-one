@@ -1,6 +1,5 @@
-package GeekBrians.Slava_5655380.Calculator.mathNotationParsers;
+package GeekBrians.Slava_5655380.Calculator.MathNotationParsers;
 
-import java.math.BigDecimal;
 import java.util.Stack;
 
 import GeekBrians.Slava_5655380.Calculator.BinaryOperation;
@@ -8,9 +7,10 @@ import GeekBrians.Slava_5655380.Calculator.Operation;
 
 public class RPNSolver {
 
-    BinaryOperation calculator;
-
+    private BinaryOperation calculator;
     private final String VARIABLE = "var";
+    private Stack<String> stackRPN = new Stack<String>();
+    private Stack<String> resultStack = new Stack<String>();
 
     private boolean isNumber(String token) {
         try {
@@ -23,11 +23,7 @@ public class RPNSolver {
         }
         return true;
     }
-
-    public Stack<String> stackRPN = new Stack<String>();
-
-    public Stack<String> resultStack = new Stack<String>();
-
+    
     public RPNSolver(BinaryOperation calculator, Stack<String> stackRPN) {
         this.calculator = calculator;
         this.stackRPN = stackRPN;
@@ -44,7 +40,7 @@ public class RPNSolver {
                 try {
                     rightOperand = resultStack.pop();
                     leftOperand = resultStack.pop();
-                } catch (java.util.EmptyStackException e){
+                } catch (java.util.EmptyStackException e) {
                     throw new MissingTokenException();
                 }
                 if (token.equals("+")) {

@@ -1,17 +1,17 @@
-package GeekBrians.Slava_5655380.Calculator.mathNotationParsers;
+package GeekBrians.Slava_5655380.Calculator.MathNotationParsers;
 
 import java.text.ParseException;
 import java.util.Collections;
 import java.util.Stack;
 import java.util.StringTokenizer;
 
-import GeekBrians.Slava_5655380.UI.CalculatorPresenter;
+import static GeekBrians.Slava_5655380.TextUtils.StringAnalyzingUtil.*;
 
 /**
  * Класс реализующий алгоритм сортировочной станции.
  * Исходный код получен по ссылке:
  * https://www.pvsm.ru/java/3665
- *
+ * <p>
  * Модификации оригинального исходного кода:
  * Удаленна реализация парсинга комплексных чисел;
  * Удаленно не используемое поле stackAnswer;
@@ -33,11 +33,6 @@ public class InfixToRPNConverter {
     // stack for holding expression converted to reversed polish notation
     private Stack<String> stackRPN = new Stack<String>();
     // stack for holding the calculations result
-
-    public Stack<String> getStackRPN() {
-        Stack<String> stackRPNCopy = (Stack<String>)stackRPN.clone();
-        return stackRPNCopy;
-    }
 
     private boolean isNumber(String token) {
         try {
@@ -83,14 +78,19 @@ public class InfixToRPNConverter {
         return 2;
     }
 
+    public Stack<String> getStackRPN() {
+        Stack<String> stackRPNCopy = (Stack<String>) stackRPN.clone();
+        return stackRPNCopy;
+    }
+
     public void parse(String expression) throws ParseException {
-        if(expression.length() == 0){
+        if (expression.length() == 0) {
             throw new ParseException("выражение не может быть пустым.", 0);
         }
-        if(CalculatorPresenter.countEntries(expression, "(") > CalculatorPresenter.countEntries(expression, ")")){
+        if (countEntries(expression, "(") > countEntries(expression, ")")) {
             throw new ParseException("открывающих скобок больше чем закрывающих.", expression.lastIndexOf(')'));
         }
-        if(CalculatorPresenter.countEntries(expression, "(") < CalculatorPresenter.countEntries(expression, ")")){
+        if (countEntries(expression, "(") < countEntries(expression, ")")) {
             throw new ParseException("открывающих скобок меньше чем закрывающих.", expression.lastIndexOf('('));
         }
 
@@ -142,7 +142,7 @@ public class InfixToRPNConverter {
                 stackOperations.push(token);
             } else if (isFunction(token)) {
                 stackOperations.push(token);
-            }else {
+            } else {
                 throw new ParseException("использован неизвестный токен.", tokenIndex);
             }
         }
