@@ -14,14 +14,24 @@ public class Calculator implements BinaryOperation {
         BigDecimal rightOperandBD = new BigDecimal(rightOperand,  new MathContext(precision));
         switch (operation) {
             case ADD:
-                return leftOperandBD.add(rightOperandBD).setScale(precision, roundingMode).stripTrailingZeros().toPlainString();
+                return stripTrailingZerosFixed(leftOperandBD.add(rightOperandBD).setScale(precision, roundingMode)).toPlainString();
             case SUB:
-                return rightOperandBD.subtract(leftOperandBD).setScale(precision, roundingMode).stripTrailingZeros().toPlainString(); // TODO: разобраться почему операнды пришлось поменять местами
+                return stripTrailingZerosFixed(leftOperandBD.subtract(rightOperandBD).setScale(precision, roundingMode)).toPlainString();
             case MULT:
-                return leftOperandBD.multiply(rightOperandBD).setScale(precision, roundingMode).stripTrailingZeros().toPlainString();
+                return stripTrailingZerosFixed(rightOperandBD.multiply(leftOperandBD).setScale(precision, roundingMode)).toPlainString();
             case DIV:
-                return rightOperandBD.divide(leftOperandBD, precision, roundingMode).stripTrailingZeros().toPlainString(); // TODO: разобраться почему операнды пришлось поменять местами
+                return stripTrailingZerosFixed(rightOperandBD.divide(leftOperandBD, precision, roundingMode)).toPlainString();
         }
         return "NaN";
+    }
+
+    // https://bugs.java.com/bugdatabase/view_bug.do?bug_id=6480539
+    private BigDecimal stripTrailingZerosFixed(BigDecimal bigDecimal){
+        BigDecimal zero = new BigDecimal("0");
+        if ( bigDecimal.compareTo(zero) == 0 ) {
+            return zero;
+        } else {
+            return bigDecimal.stripTrailingZeros();
+        }
     }
 }

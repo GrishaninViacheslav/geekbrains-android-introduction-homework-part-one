@@ -39,8 +39,8 @@ public class RPNSolver {
             if (isNumber(token))
                 resultStack.push(token);
             else {
-                String leftOperand = resultStack.pop();
                 String rightOperand = resultStack.pop();
+                String leftOperand = resultStack.pop();
                 if (token.equals("+")) {
                     resultStack.push(String.valueOf(calculator.binaryOperation(leftOperand, rightOperand, Operation.ADD)));
                 } else if (token.equals("-")) {
