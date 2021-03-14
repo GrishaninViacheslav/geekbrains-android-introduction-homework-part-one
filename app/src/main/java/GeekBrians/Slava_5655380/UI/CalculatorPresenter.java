@@ -103,6 +103,11 @@ public class CalculatorPresenter {
         formatText(display);
     }
 
+    public void keyInversionPressed(){
+        commitSymb('(');
+        commitSymb('-');
+    }
+
     public void keyBackspacePressed() {
         // TODO: обраюотать удаление пробелов(разделителей) и знаков
         if (TextUtils.isEmpty(display.getSelectedText(0))) {

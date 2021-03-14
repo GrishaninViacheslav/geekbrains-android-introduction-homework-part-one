@@ -72,6 +72,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.button_inversion).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                calculatorPresenter.keyInversionPressed();
+            }
+        });
+
         findViewById(R.id.button_result).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

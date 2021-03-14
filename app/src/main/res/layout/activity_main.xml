@@ -275,7 +275,7 @@
         android:textColor="@color/white"
         android:textSize="@dimen/button_text"
         app:backgroundTint="@color/button"
-        app:layout_constraintBottom_toTopOf="@id/button_inverse"
+        app:layout_constraintBottom_toTopOf="@id/button_inversion"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toStartOf="@id/button_2"
         app:layout_constraintHorizontal_chainStyle="packed"
@@ -340,7 +340,7 @@
         app:layout_constraintTop_toBottomOf="@id/button_subtraction" />
 
     <Button
-        android:id="@+id/button_inverse"
+        android:id="@+id/button_inversion"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/button_horizontal_margin"
@@ -375,7 +375,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toStartOf="@id/button_point"
-        app:layout_constraintStart_toEndOf="@id/button_inverse"
+        app:layout_constraintStart_toEndOf="@id/button_inversion"
         app:layout_constraintTop_toBottomOf="@id/button_2" />
 
     <Button
