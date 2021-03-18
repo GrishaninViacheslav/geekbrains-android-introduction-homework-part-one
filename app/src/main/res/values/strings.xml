@@ -20,5 +20,6 @@
     <string name="_addition">+</string>
     <string name="_computation">=</string>
     <string name="button_font">sans-serif-light</string>
+    <string name="button_font_night">serif-light</string>
     <string name="backspace"><![CDATA[<<]]></string>
 </resources>
