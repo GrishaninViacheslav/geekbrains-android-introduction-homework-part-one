@@ -9,7 +9,8 @@
         android:roundIcon="@drawable/icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.Geekbrainsandroidintroductionhomework">
-        <activity android:name=".UI.MainActivity" >
+        <activity android:name=".UI.SettingsActivity"></activity>
+        <activity android:name=".UI.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
