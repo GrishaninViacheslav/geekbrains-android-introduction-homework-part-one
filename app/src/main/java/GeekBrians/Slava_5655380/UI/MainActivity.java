@@ -110,9 +110,7 @@ public class MainActivity extends AppCompatActivity {
         calculatorPresenter = new CalculatorPresenter(calculatorDispaly.onCreateInputConnection(new EditorInfo()), new Calculator(), (byte) 3);
         initButtonsListeners();
     }
-<<<<<<< HEAD
-}
-=======
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -121,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        if (resultCode == RESULT_OK){
+        if (resultCode == RESULT_OK) {
             currTheme = data.getIntExtra(THEME_ID_BUNDLE_KEY, currTheme);
             Log.d("[fuck]", "recreate currTheme: " + currTheme);
             recreate();
@@ -136,4 +134,3 @@ public class MainActivity extends AppCompatActivity {
 
     }
 }
->>>>>>> d7ab3d9 (Решение заданий 1 и 2)
