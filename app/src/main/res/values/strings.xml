@@ -22,4 +22,8 @@
     <string name="button_font">sans-serif-light</string>
     <string name="button_font_night">serif-light</string>
     <string name="backspace"><![CDATA[<<]]></string>
+    <string name="toggle_theme_original_string">Оригинальная</string>
+    <string name="settings_title_string">Тема приложения</string>
+    <string name="toggle_theme_white_string">Альтернативная</string>
+    <string name="button_settings_text">...</string>
 </resources>
