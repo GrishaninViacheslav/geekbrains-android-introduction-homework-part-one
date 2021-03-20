@@ -20,7 +20,7 @@
     <string name="_addition">+</string>
     <string name="_computation">=</string>
     <string name="button_font">sans-serif-light</string>
-    <string name="button_font_night">serif-light</string>
+    <string name="button_font_night">sans-serif</string>
     <string name="backspace"><![CDATA[<<]]></string>
     <string name="toggle_theme_original_string">Оригинальная</string>
     <string name="settings_title_string">Тема приложения</string>
